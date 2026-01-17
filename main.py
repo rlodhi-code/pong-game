@@ -1,4 +1,6 @@
-from turtle import Screen, Turtle
+import sys
+from sys import displayhook
+from turtle import Screen
 from paddle import Paddle
 from ball import Ball
 from time import sleep
@@ -31,7 +33,18 @@ while game_is_on:
     #Detect collision with wall
     if ball.ycor() > 280 or ball.ycor() < -280:
         #need to bounce
-        ball.bounce()
+        ball.bounce_y()
+
+    #detect collision with paddle
+    if (ball.distance(r_paddle) < 50 and ball.xcor() > 320) or (ball.distance(l_paddle) < 50 and ball.xcor() < -320):
+        ball.bounce_x()
+
+    #detect if ball as gone passed the side walls
+    if ball.xcor() > 380:
+        ball.reset_position()
+
+    if ball.xcor() < -380:
+        ball.reset_position()
 
 screen.exitonclick()
 
